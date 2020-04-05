@@ -78,7 +78,7 @@ def validate(password):
 def run():
     password = generate_password()
     if validate(password):
-        print(f'Secure Password')
+        print('Secure Password')
     else:
         print('Insecure Password')
 
