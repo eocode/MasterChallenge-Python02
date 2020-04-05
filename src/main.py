@@ -8,17 +8,38 @@ SYMBOLS = list('!"#$%&\'()*+,-./:;?@[]^_`{|}~')
 def generate_password():
     dict = {
         'password': '',
-        'ascii_nums': [48,57],
-        'ascii_lower_case': [65,90],
-        'ascii_upper_case': [97,122],
+        'posibilities': [
+            [48, 57],  # numbers
+            [65, 90],  # lowercase
+            [97, 122],  # uppercase
+            [33, 47]  # symbols
+        ],
+        'countPosibility': [0, 0, 0, 0],
+        'pass_all_posibilities': False
     }
-    for i in range(4):
-        dict['password'] += chr(random.randint(dict['ascii_nums'][0],dict['ascii_nums'][1]))
-        dict['password'] += chr(random.randint(dict['ascii_lower_case'][0],dict['ascii_lower_case'][1]))
-        dict['password'] += chr(random.randint(dict['ascii_upper_case'][0],dict['ascii_upper_case'][1]))
-        dict['password'] += SYMBOLS[random.randint(0,len(SYMBOLS)-1)]
+    for i in range(16):
+        posibility = random.randint(0, 3)
+
+        # Validation check
+        if not dict['pass_all_posibilities'] and i > 4:
+            index = searchIfExistValue(dict['countPosibility'], 0)
+            if index == -1:
+                dict['pass_all_posibilities'] = True
+            else:
+                posibility = index
+
+        dict['countPosibility'][posibility] += 1
+        l = dict['posibilities'][posibility]
+        dict['password'] += chr(random.randint(l[0], l[len(l)-1]))
 
     return dict['password']
+
+
+def searchIfExistValue(list, value):
+    try:
+        return list.index(value)
+    except ValueError:
+        return -1
 
 
 def validate(password):
@@ -57,9 +78,9 @@ def validate(password):
 def run():
     password = generate_password()
     if validate(password):
-        print('Secure Password')
+        print(f'Secure Password')
     else:
-        print(f'Insecure Password {password}')
+        print('Insecure Password')
 
 
 if __name__ == '__main__':
