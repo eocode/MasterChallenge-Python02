@@ -6,19 +6,19 @@ SYMBOLS = list('!"#$%&\'()*+,-./:;?@[]^_`{|}~')
 
 
 def generate_password():
-    password = ''
-    for i in range(16):
-        character = chr(random.randint(33,126))
-        if i == 7:
-            password += str(random.randint(0,9))
-        else:    
-            if character not in SYMBOLS or character not in string.ascii_lowercase or character not in string.ascii_uppercase or character not in string.digits:
-                password += character
-            else:
-                password += SYMBOLS[random.randint(0,len(SYMBOLS)-1)]
+    dict = {
+        'password': '',
+        'ascii_nums': [48,57],
+        'ascii_lower_case': [65,90],
+        'ascii_upper_case': [97,122],
+    }
+    for i in range(4):
+        dict['password'] += chr(random.randint(dict['ascii_nums'][0],dict['ascii_nums'][1]))
+        dict['password'] += chr(random.randint(dict['ascii_lower_case'][0],dict['ascii_lower_case'][1]))
+        dict['password'] += chr(random.randint(dict['ascii_upper_case'][0],dict['ascii_upper_case'][1]))
+        dict['password'] += SYMBOLS[random.randint(0,len(SYMBOLS)-1)]
 
-    print(f'Your password is: {password}')
-    return password
+    return dict['password']
 
 
 def validate(password):
@@ -59,7 +59,7 @@ def run():
     if validate(password):
         print('Secure Password')
     else:
-        print('Insecure Password')
+        print(f'Insecure Password {password}')
 
 
 if __name__ == '__main__':
