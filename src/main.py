@@ -1,11 +1,24 @@
 # Resolve the problem!!
 import string
+import random
 
 SYMBOLS = list('!"#$%&\'()*+,-./:;?@[]^_`{|}~')
 
 
 def generate_password():
-    # Start coding here
+    password = ''
+    for i in range(16):
+        character = chr(random.randint(33,126))
+        if i == 7:
+            password += str(random.randint(0,9))
+        else:    
+            if character not in SYMBOLS or character not in string.ascii_lowercase or character not in string.ascii_uppercase or character not in string.digits:
+                password += character
+            else:
+                password += SYMBOLS[random.randint(0,len(SYMBOLS)-1)]
+
+    print(f'Your password is: {password}')
+    return password
 
 
 def validate(password):
