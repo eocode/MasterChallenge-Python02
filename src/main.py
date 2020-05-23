@@ -6,7 +6,7 @@ SYMBOLS = list('!"#$%&\'()*+,-./:;?@[]^_`{|}~')
 
 
 def generate_password():
-    dict = {
+    posibilities = {
         'password': '',
         'posibilities': [
             [48, 57],  # numbers
@@ -21,23 +21,23 @@ def generate_password():
         posibility = random.randint(0, 3)
 
         # Validation check
-        if not dict['pass_all_posibilities'] and i > 4:
-            index = searchIfExistValue(dict['countPosibility'], 0)
+        if not posibilities['pass_all_posibilities'] and i > 4:
+            index = searchIfExistValue(posibilities['countPosibility'], 0)
             if index == -1:
-                dict['pass_all_posibilities'] = True
+                posibilities['pass_all_posibilities'] = True
             else:
                 posibility = index
 
-        dict['countPosibility'][posibility] += 1
-        l = dict['posibilities'][posibility]
-        dict['password'] += chr(random.randint(l[0], l[len(l)-1]))
+        posibilities['countPosibility'][posibility] += 1
+        l = posibilities['posibilities'][posibility]
+        posibilities['password'] += chr(random.randint(l[0], l[len(l)-1]))
 
-    return dict['password']
+    return posibilities['password']
 
 
-def searchIfExistValue(list, value):
+def searchIfExistValue(data, value):
     try:
-        return list.index(value)
+        return data.index(value)
     except ValueError:
         return -1
 
